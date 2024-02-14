@@ -22,6 +22,9 @@
             "128": "/img/fauxbar128.png"
         }
     },
+    "chrome_url_overrides": {
+        "newtab": "popup.html#newTab"
+    },    
     "options_page": "options.html",
     "permissions": [
         "storage",
@@ -29,12 +32,13 @@
         "scripting",
         "tabs"
     ],
+    // This ends up injecting these scripts in EVERY web page 
     // "content_scripts": [
     //     {
-    //       "matches": ["*"],
-    //       "run_at": "document_end", 
-    //       "js": ["./lib/jquery-3.7.1.min.js"],
-    //       "all_frames": false
+    //       "css":["/main.css"],
+    //       "js":["/lib/jquery-3.7.1.min.js", "./common.js"],
+    //       "matches": ["*://*/*"],
+    //       "run_at": "document_end"
     //     }
     // ],
     "host_permissions": [

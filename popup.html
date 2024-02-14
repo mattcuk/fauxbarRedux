@@ -6,25 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fauxbar Redux</title>
-    <style>
-        body {
-            width: 400px;
-            height: 200px;
-
-            color: black;
-            font-size: 12px;
-        }
-    </style>
-    <script src="popup.js"></script>
+    <link rel="stylesheet" href="styles.css">
     <script src="lib/jquery-3.7.1.min.js"></script>
-    
+    <script src="common.js"></script>
 </head>
 
 <body>
     <div>
         Hello world.
-        <button id="popButton">Call func</button>
+        <button id="readVar">Read Var</button> <button id="setVar">Set Var</button> <button id="setVar2">Set Var2</button>
+        <div id="response"></div>
     </div>
 </body>
+
+<script src="popup.js"></script>
 
 </html>

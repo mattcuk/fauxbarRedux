@@ -18,3 +18,36 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         .catch(err => console.log(err));
     }
 });
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.message === 'get_name') {
+        console.log(request.message);
+        chrome.storage.local.get('name', data => {
+            if (chrome.runtime.lastError) {
+                sendResponse({
+                    message: 'fail'
+                });
+
+                return;
+            }
+            sendResponse({
+                message: 'success',
+                payload: data.name
+            });
+        });
+
+        return true;
+    } else if (request.message === 'change_name') {
+        chrome.storage.local.set({
+            name: request.payload
+        }, () => {
+            if (chrome.runtime.lastError) {
+                sendResponse({ message: 'fail' });
+                return;
+            }
+            sendResponse({ message: 'success' });
+        })
+
+        return true;
+    }
+});

@@ -1,10 +1,32 @@
 console.log('popup.js loaded');
 
-$('#popButton').on('click', function() {
-    console.log('popButton clicked');
+$('#readVar').on('click', function() {
+    chrome.runtime.sendMessage({ 
+        message: "get_name"
+    }, response => {
+        if (response.message === 'success') {
+            $('#response').html(`Variable contains: ${response.payload}`);
+        }
+    });
+
+    commonFunc();
 });
 
-function popFunc() {
-    console.log('popup.js popFunc called');
-    console.log($('body').text());
-}
+$('#setVar').on('click', function() {
+    chrome.runtime.sendMessage({ 
+        message: "change_name",
+        payload: "Scott"
+    }, response => {
+        if (response.message === 'success') {
+            $('#response').html('Variable set!');
+        }
+    });
+});
+
+$('#setVar2').on('click', function() {
+    chrome.storage.local.set({
+        name: 'John'
+    }, () => {
+        $('#response').html('Variable set2!');
+    })
+});

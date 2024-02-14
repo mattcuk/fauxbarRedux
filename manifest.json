@@ -30,7 +30,9 @@
         "storage",
         "activeTab",
         "scripting",
-        "tabs"
+        "tabs",
+        "bookmarks",
+        "history"
     ],
     // This ends up injecting these scripts in EVERY web page 
     // "content_scripts": [

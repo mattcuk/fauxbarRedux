@@ -29,6 +29,14 @@
         "scripting",
         "tabs"
     ],
+    // "content_scripts": [
+    //     {
+    //       "matches": ["*"],
+    //       "run_at": "document_end", 
+    //       "js": ["./lib/jquery-3.7.1.min.js"],
+    //       "all_frames": false
+    //     }
+    // ],
     "host_permissions": [
         "https://www.google.com/*"
     ]

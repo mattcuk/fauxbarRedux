@@ -1,1 +1,35 @@
-test
+{
+    "name": "Fauxbar Redux",
+    "description": "Rewrite of the Fauxbar Omnibar replacement",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "minimum_chrome_version": "120",
+    "icons": {
+        "16": "/img/fauxbar16.png",
+        "19": "/img/fauxbar19.png",
+        "48": "/img/fauxbar48.png",
+        "128": "/img/fauxbar128.png"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "/img/fauxbar16.png",
+            "19": "/img/fauxbar19.png",
+            "48": "/img/fauxbar48.png",
+            "128": "/img/fauxbar128.png"
+        }
+    },
+    "options_page": "options.html",
+    "permissions": [
+        "storage",
+        "activeTab",
+        "scripting",
+        "tabs"
+    ],
+    "host_permissions": [
+        "https://www.google.com/*"
+    ]
+}

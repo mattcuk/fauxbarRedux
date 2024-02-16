@@ -67,7 +67,7 @@ function searchBookmarks(search) {
 function searchHistory(search) {
     var historyList = $('#history');
     historyList.empty();
-    chrome.history.search({text: 'GitHub', startTime: 0}, function(results) {
+    chrome.history.search({text: search, startTime: 0}, function(results) {
         results.forEach(function(result) {
             historyList.append($('<option>', {
                 value: result.url,

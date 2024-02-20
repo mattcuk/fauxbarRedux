@@ -22,15 +22,16 @@
             "128": "/img/fauxbar128.png"
         }
     },
-    "chrome_url_overrides": {
-        "newtab": "popup.html#newTab"
-    },    
+    // "chrome_url_overrides": {
+    //     "newtab": "popup.html#newTab"
+    // },    
     "options_page": "options.html",
     "permissions": [
         "storage",
         "activeTab",
         "scripting",
         "tabs",
+        "activeTab",
         "bookmarks",
         "history"
     ],

@@ -1,5 +1,11 @@
 console.log('popup.js loaded');
 
+var _activeTab;
+
+chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+    _activeTab = tabs[0];
+});
+
 $('#readVar').on('click', function() {
     chrome.runtime.sendMessage({ 
         message: "get_name"
@@ -31,21 +37,45 @@ $('#setVar2').on('click', function() {
     })
 });
 
-$('#searchBoth').on('click', function() {
-    var search = $('#search').val();
-    searchBookmarks(search);
-    searchHistory(search);
+ var debounce;
+ $('#search').on('keyup', function (e) {
+     clearTimeout(debounce);
+     debounce = setTimeout( 
+       function () { 
+            var search = $('#search').val();
+            searchBookmarks(search);
+            searchHistory(search);
+       }, 300
+     );
 });
 
-$('#searchBookmarks').on('click', function() {
-    var search = $('#search').val();
-    searchBookmarks(search);
+$("#history,#bookmarks").on("dblclick", function() {
+    var url = $(this).find(":selected").val();
+    console.log(_activeTab);
+    
+    if(_activeTab.url.indexOf('chrome')==0) {
+        chrome.tabs.update(_activeTab.id, {url: url})
+    } else {
+        alert(_activeTab.url);
+        chrome.tabs.create({url: url})
+    }
 });
 
-$('#searchHistory').on('click', function() {
-    var search = $('#search').val();
-    searchHistory(search);
-});
+// $('#searchBoth').on('click', function() {
+//     var search = $('#search').val();
+//     searchBookmarks(search);
+//     searchHistory(search);
+// });
+
+// $('#searchBookmarks').on('click', function() {
+//     var search = $('#search').val();
+//     searchBookmarks(search);
+// });
+
+// $('#searchHistory').on('click', function() {
+//     var search = $('#search').val();
+//     searchHistory(search);
+// });
 
 function searchBookmarks(search) {
     var bookmarkList = $('#bookmarks');
@@ -55,7 +85,8 @@ function searchBookmarks(search) {
         results.forEach(function(bookmark) {
             bookmarkList.append($('<option>', {
                 value: bookmark.url,
-                text: bookmark.url
+                text: bookmark.url,
+                title: bookmark.title
             }));
             // console.log('ID: ' + bookmark.id);
             // console.log('Title: ' + bookmark.title);
@@ -71,7 +102,8 @@ function searchHistory(search) {
         results.forEach(function(result) {
             historyList.append($('<option>', {
                 value: result.url,
-                text: result.visitCount + " " + result.url
+                text: result.visitCount + " " + result.url,
+                title: result.title
             }));
             // console.log('URL: ' + result.url);
             // console.log('Last visited: ' + new Date(result.lastVisitTime));

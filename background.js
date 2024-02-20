@@ -5,7 +5,7 @@ chrome.runtime.onInstalled.addListener(() => {
     // this runs ONE TIME ONLY (unless the user reinstalls your extension)
 });
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+/*chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     console.log(tab.url);
     if (changeInfo.status === 'complete' && /^http/.test(tab.url)) {
         chrome.scripting.executeScript({
@@ -50,4 +50,4 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
         return true;
     }
-});
+});*/

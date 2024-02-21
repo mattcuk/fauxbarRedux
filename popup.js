@@ -40,13 +40,16 @@ $('#setVar2').on('click', function() {
  var debounce;
  $('#search').on('keyup', function (e) {
      clearTimeout(debounce);
-     debounce = setTimeout( 
-       function () { 
-            var search = $('#search').val();
+     var search = $('#search').val()
+     if(search.length>1) {
+        debounce = setTimeout(function () { 
             searchBookmarks(search);
             searchHistory(search);
-       }, 300
-     );
+        }, 150);
+    } else {
+        $('#bookmarks').empty();
+        $('#history').empty();
+    }
 });
 
 $("#history,#bookmarks").on("dblclick", function() {
@@ -56,7 +59,6 @@ $("#history,#bookmarks").on("dblclick", function() {
     if(_activeTab.url.indexOf('chrome')==0) {
         chrome.tabs.update(_activeTab.id, {url: url})
     } else {
-        alert(_activeTab.url);
         chrome.tabs.create({url: url})
     }
 });
@@ -83,11 +85,13 @@ function searchBookmarks(search) {
     chrome.bookmarks.search(search, function(results) {
         console.log(results.length + ' bookmarks found');
         results.forEach(function(bookmark) {
-            bookmarkList.append($('<option>', {
-                value: bookmark.url,
-                text: bookmark.url,
-                title: bookmark.title
-            }));
+            if(bookmark.url.length>1 && bookmark.url.indexOf('javascript')==-1) {
+                bookmarkList.append($('<option>', {
+                    value: bookmark.url,
+                    text: bookmark.url,
+                    title: bookmark.title
+                }));
+            }
             // console.log('ID: ' + bookmark.id);
             // console.log('Title: ' + bookmark.title);
             // console.log('URL: ' + bookmark.url);

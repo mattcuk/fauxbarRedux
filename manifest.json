@@ -1,6 +1,6 @@
 {
-    "name": "Fauxbar Redux",
-    "description": "Rewrite of the Fauxbar Omnibar replacement",
+    "name": "OmniRedux",
+    "description": "Search your entire browser history, not just what Chrome surfaces. Inspired by the FauxBar extension.",
     "version": "1.0.0",
     "manifest_version": 3,
     "minimum_chrome_version": "120",
@@ -35,6 +35,9 @@
         "bookmarks",
         "history"
     ],
+    "omnibox": {
+        "keyword": "f"
+    }
     // This ends up injecting these scripts in EVERY web page 
     // "content_scripts": [
     //     {
@@ -44,7 +47,7 @@
     //       "run_at": "document_end"
     //     }
     // ],
-    "host_permissions": [
-        "https://www.google.com/*"
-    ]
+    // "host_permissions": [
+    //     "https://www.google.com/*"
+    // ]
 }

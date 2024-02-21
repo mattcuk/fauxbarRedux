@@ -8,7 +8,7 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.omnibox.onInputStarted.addListener(function () {
     chrome.omnibox.setDefaultSuggestion({
         description:
-            "<match>OmniRedux Results</match> ...    "
+            "<match>History Results</match> from"
     });
 });
 

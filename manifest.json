@@ -1,6 +1,6 @@
 {
     "name": "Omnibar - Full History Search",
-    "description": "Search your entire browser history from the Omnibar, not just what Chrome surfaces. Type 'f' followed by a tab or space to activate this feautre, then type what you want to search for. Inspired by the FauxBar extension.",
+    "description": "Search your entire browser history from the Omnibar, not just what Chrome normally surfaces. Type 'f' followed by a tab or space to activate this feautre, then type what you want to search for. Inspired by the Fauxbar extension.",
     "version": "1.0.0",
     "manifest_version": 3,
     "minimum_chrome_version": "120",
@@ -25,7 +25,7 @@
     "permissions": [
         "storage",
         "activeTab",
-        "scripting",
+        // "scripting",
         "tabs",
         "activeTab",
         "bookmarks",

@@ -1,5 +1,11 @@
 console.log('background.js loaded');
 
+// Useful resources;
+// Icons - https://www.svgrepo.com/svg/449050/document-time
+// Resizing SVGs - https://boxy-svg.com/
+// Omnibox API - https://developer.chrome.com/docs/extensions/reference/api/omnibox
+// Unicode icons that can be baked into code - https://symbl.cc/en/unicode/blocks/dingbats/
+
 chrome.runtime.onInstalled.addListener(() => {
     // default state goes here
     // this runs ONE TIME ONLY (unless the user reinstalls your extension)
@@ -8,30 +14,40 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.omnibox.onInputStarted.addListener(function () {
     chrome.omnibox.setDefaultSuggestion({
         description:
-            "<match>History Results</match> from"
+            "🚀 Search through all your browse history ... "
     });
 });
 
-// https://developer.chrome.com/docs/extensions/reference/api/omnibox
 chrome.omnibox.onInputChanged.addListener(function (searchText, suggest) {
-
     if (searchText.length>1) {
         chrome.history.search({ text: searchText, startTime: 0 }, function (results) {
             var suggestions = [];
-            results.forEach(function (result) {
-                if(result.title.length>1) {
-                    suggestions.push({ content: result.url, description: xmlEncodeManual(result.title) + ' - <url>' +xmlEncodeManual(result.url)+'</url>', deletable: false });
-                }
-                // console.log('URL: ' + result.url);
-                // console.log('Last visited: ' + new Date(result.lastVisitTime));
-                // console.log('Visit count: ' + result.visitCount);
-            });
-            if(suggestions.length>0) suggest(suggestions);
+
+            var limit = 20; // Limits the total number of results in the omnibox to this.. should help with performance when dealing with long lists
+            if(results.length<limit) limit = results.length;
+
+            var titleLimit = 80; // Limits the page titles to this number of characters when displayed in the omnibox
+
+            // Loop over history results & format them into suggestions for the omnibox to display
+            for(var i=0; i<results.length; i++) {
+                results.forEach(function (result) {
+                    if(result.title.length>1) {
+                        suggestions.push({
+                            content: result.url, 
+                            description: xmlEncode(limitText(result.title, titleLimit)) + ' - <url>' +xmlEncode(tidyUrl(result.url))+'</url>', 
+                            deletable: false });
+                    }
+                });
+            }
+
+            // Display the suggestions from browse history
+            suggest(suggestions);
         });
     }
 });
 
-function xmlEncodeManual(str) {
+// Encode characters for XML
+function xmlEncode(str) {
     return str.replace(/&|<|>|'|"/g, (match) => {
         switch (match) {
             case "&": return "&amp;";
@@ -42,6 +58,19 @@ function xmlEncodeManual(str) {
             default: return match;
         }
     });
+}
+
+// Limits a string  to a number of characters and appends ... to the end
+function limitText(text, limit) {
+    if(text.length>limit) text = text.substring(0, limit) + ' ... ';
+    return text;
+}
+
+// Remove the protocol from domains (can be extended to do other things as needed)
+function tidyUrl(url) {
+    url = url.replace('https://', '');
+    url = url.replace('http://', '');
+    return url;
 }
 
 /*chrome.omnibox.onInputEntered.addListener(function (text, disposition) {
@@ -63,7 +92,6 @@ chrome.omnibox.onInputEntered.addListener((url, disposition) => {
       break;
   }
 });
-
 
 /*chrome.omnibox.onInputCancelled.addListener(function () {
     appendLog('❌ onInputCancelled');

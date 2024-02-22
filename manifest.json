@@ -1,31 +1,27 @@
 {
-    "name": "OmniRedux",
-    "description": "Search your entire browser history, not just what Chrome surfaces. Inspired by the FauxBar extension.",
+    "name": "Omnibar - Full History Search",
+    "description": "Search your entire browser history from the Omnibar, not just what Chrome surfaces. Type 'f' followed by a tab or space to activate this feautre, then type what you want to search for. Inspired by the FauxBar extension.",
     "version": "1.0.0",
     "manifest_version": 3,
     "minimum_chrome_version": "120",
     "icons": {
-        "16": "/img/fauxbar16.png",
-        "19": "/img/fauxbar19.png",
-        "48": "/img/fauxbar48.png",
-        "128": "/img/fauxbar128.png"
+        "16": "/img/logo16.png",
+        "19": "/img/logo19.png",
+        "48": "/img/logo48.png",
+        "128": "/img/logo128.png"
     },
     "background": {
         "service_worker": "background.js"
     },
     "action": {
-        "default_popup": "popup.html",
+        "default_popup": "popup_info.html",
         "default_icon": {
-            "16": "/img/fauxbar16.png",
-            "19": "/img/fauxbar19.png",
-            "48": "/img/fauxbar48.png",
-            "128": "/img/fauxbar128.png"
+            "16": "/img/logo16.png",
+            "19": "/img/logo19.png",
+            "48": "/img/logo48.png",
+            "128": "/img/logo128.png"
         }
     },
-    // "chrome_url_overrides": {
-    //     "newtab": "popup.html#newTab"
-    // },    
-    "options_page": "options.html",
     "permissions": [
         "storage",
         "activeTab",
@@ -38,6 +34,10 @@
     "omnibox": {
         "keyword": "f"
     }
+    // "options_page": "options.html",
+    // "chrome_url_overrides": {
+    //     "newtab": "popup.html#newTab"
+    // },    
     // This ends up injecting these scripts in EVERY web page 
     // "content_scripts": [
     //     {

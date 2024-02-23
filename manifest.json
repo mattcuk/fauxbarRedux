@@ -25,7 +25,6 @@
     "permissions": [
         "storage",
         "activeTab",
-        // "scripting",
         "tabs",
         "activeTab",
         "bookmarks",
